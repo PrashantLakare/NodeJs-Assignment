@@ -37,20 +37,6 @@ const approveProfile = async (req, res) => {
   }
 }
 
-// Get list of all the persons
-// const getPersonsList = async (req, res) => {
-//   try {
-//       if (req.user.role === 'R3') {
-//         const people = await Person.find({ userId: req.user.id });
-//         res.json(people);
-//       } else {
-//         const people = await Person.find();
-//         res.json(people);
-//       }
-//     } catch (err) {
-//       res.status(500).json({ error: 'Fetching persons failed' });
-//     }
-// };
 const getPersonsList = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // default to page 1
@@ -79,21 +65,6 @@ const getPersonsList = async (req, res) => {
   }
 };
 
-// Search persons
-// const searchPersons = async (req, res) => {
-//   try {
-//     const filter = { ...req.body };
-//     const people = await Person.find(filter);
-
-//     if (people?.length) {
-//       res.json(people);
-//     } else {
-//       res.status(404).json({ error: 'No matching persons found' });
-//     }
-//   } catch (err) {
-//     res.status(500).json({ error: 'Search failed' });
-//   }
-// };
 const searchPersons = async (req, res) => {
   try {
     const filter = {};
@@ -129,24 +100,6 @@ const searchPersons = async (req, res) => {
   }
 };
 
-// Update person info (All roles)
-// const updatePersonInfo = async (req, res) => {
-//     const { error } = personSchema.validate(req.body);
-//       if (error) return res.status(400).json({ error: error.details[0].message });
-//       try {
-//         if (req.user.role === 'R3') {
-//           const p = await Person.findById(req.query.id);
-//           if (p.userId !== req.user.id) {
-//             return res.status(403).json({ error: 'You can only update your own profile' });
-//           }
-//         }
-//         const person = await Person.findByIdAndUpdate(req.query.id, { ...req.body, updateApprovalPending: true }, { new: true });
-//         if (!person) return res.status(404).json({ error: 'Person not found' });
-//         res.json([{messageKey: 'Success', message: 'Profile update requested successfully'}, person]);
-//       } catch (err) {
-//         res.status(500).json({ error: 'Update failed' });
-//       }
-// }
 const updatePersonInfo = async (req, res) => {
   const { error } = personSchema.validate(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
@@ -200,16 +153,6 @@ const updatePersonInfo = async (req, res) => {
   }
 };
 
-// Approve person info update (Admin only)
-// const approveUpdate = async (req, res) => {
-//     try {
-//         const person = await Person.findByIdAndUpdate(req.body.id, { updateApprovalPending: false });
-//         if (!person) return res.status(404).json({ error: 'Person not found' });
-//         res.json([{messageKey: 'Success', message: 'Profile updation approved successfully'}, person]);
-//       } catch (err) {
-//         res.status(500).json({ error: 'Approval failed' });
-//       }
-// }
 const approveUpdate = async (req, res) => {
   try {
     const { updateId } = req.body;
